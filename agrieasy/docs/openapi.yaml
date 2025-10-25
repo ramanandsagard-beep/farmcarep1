@@ -1,0 +1,134 @@
+openapi: 3.0.3
+info:
+  title: FarmCare API
+  version: 1.0.0
+servers:
+  - url: http://localhost:3001
+paths:
+  /auth/request-otp:
+    post:
+      summary: Request OTP (mock)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone:
+                  type: string
+              required: [phone]
+      responses:
+        '200':
+          description: OTP issued (mocked)
+  /auth/verify-otp:
+    post:
+      summary: Verify OTP and get JWT
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone:
+                  type: string
+                otp:
+                  type: string
+                name:
+                  type: string
+                role:
+                  type: string
+                  enum: [FARMER,EQUIPMENT_VENDOR,INPUT_SUPPLIER,TRANSPORTER,CONSUMER,ADMIN]
+              required: [phone, otp]
+      responses:
+        '200':
+          description: JWT token
+  /users/me:
+    get:
+      summary: Get current user
+      security:
+        - bearerAuth: []
+      responses:
+        '200': { description: OK }
+  /equipment:
+    get:
+      summary: List equipment
+    post:
+      summary: Create equipment (vendor)
+      security:
+        - bearerAuth: []
+  /equipment/{id}:
+    get:
+      summary: Get equipment by id
+  /equipment-bookings:
+    post:
+      summary: Create equipment booking (farmer)
+      security:
+        - bearerAuth: []
+  /inputs:
+    get:
+      summary: List input products
+    post:
+      summary: Create input product (supplier)
+      security:
+        - bearerAuth: []
+  /produce:
+    get:
+      summary: List produce
+    post:
+      summary: Create produce (farmer)
+      security:
+        - bearerAuth: []
+  /vehicles:
+    get:
+      summary: List vehicles
+    post:
+      summary: Create vehicle (transporter)
+      security:
+        - bearerAuth: []
+  /cart:
+    get:
+      summary: Get my cart
+      security:
+        - bearerAuth: []
+    post:
+      summary: Add item to cart
+      security:
+        - bearerAuth: []
+  /orders/checkout:
+    post:
+      summary: Checkout cart to create order
+      security:
+        - bearerAuth: []
+  /orders/{id}:
+    get:
+      summary: Get order by id
+      security:
+        - bearerAuth: []
+  /payments/mock:
+    post:
+      summary: Create a mock payment for an order
+      security:
+        - bearerAuth: []
+  /reviews:
+    post:
+      summary: Create review
+      security:
+        - bearerAuth: []
+  /notifications:
+    get:
+      summary: List my notifications
+      security:
+        - bearerAuth: []
+  /admin/analytics:
+    get:
+      summary: Admin analytics
+      security:
+        - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

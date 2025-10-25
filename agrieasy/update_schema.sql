@@ -1,0 +1,5 @@
+ALTER TABLE users ADD COLUMN avatar_url VARCHAR(255);
+ALTER TABLE equipment ADD COLUMN image_url VARCHAR(255);
+ALTER TABLE input_products ADD COLUMN image_url VARCHAR(255);
+ALTER TABLE produce ADD COLUMN image_url VARCHAR(255);
+ALTER TABLE vehicles ADD COLUMN image_url VARCHAR(255);
